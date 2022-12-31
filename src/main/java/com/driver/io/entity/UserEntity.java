@@ -1,8 +1,6 @@
 package com.driver.io.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -13,8 +11,10 @@ import javax.persistence.Id;
 
 @Entity(name = "users")
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class UserEntity{
 
 	@Id

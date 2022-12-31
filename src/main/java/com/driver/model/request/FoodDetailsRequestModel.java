@@ -1,5 +1,12 @@
 package com.driver.model.request;
 
+import lombok.*;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class FoodDetailsRequestModel {
 
 	private String foodName;
