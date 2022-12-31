@@ -1,10 +1,13 @@
 package com.driver.ui.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.driver.io.Converter.UserConverter;
 import com.driver.model.request.UserDetailsRequestModel;
 import com.driver.model.response.OperationStatusModel;
+import com.driver.model.response.RequestOperationName;
+import com.driver.model.response.RequestOperationStatus;
 import com.driver.model.response.UserResponse;
 import com.driver.service.UserService;
 import com.driver.service.impl.UserServiceImpl;
@@ -44,19 +47,32 @@ public class UserController {
 	@PutMapping(path = "/{id}")
 	public UserResponse updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) throws Exception{
 
-		return null;
+		UserDto userDto = UserConverter.RequestToDto(userDetails);
+		userDto = userService.updateUser(id,userDto);
+		UserResponse userResponse = UserConverter.dtoToResponse(userDto);
+		return userResponse;
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public OperationStatusModel deleteUser(@PathVariable String id) throws Exception{
-
-		return null;
+		OperationStatusModel operationStatusModel=OperationStatusModel.builder()
+				.operationName(RequestOperationName.DELETE.toString())
+				.operationResult(String.valueOf(RequestOperationStatus.SUCCESS))
+				.build();
+		userService.deleteUser(id);;
+		return operationStatusModel;
 	}
 	
 	@GetMapping()
 	public List<UserResponse> getUsers(){
-
-		return null;
+		List<UserDto> userDto=userService.getUsers();
+		List<UserResponse> userResponses=new ArrayList<>();
+		for (UserDto user : userDto) {
+			UserResponse userResponse = UserConverter.DtoToResponse(user);
+			userResponses.add(userResponse);
+		}
+		return userResponses;
 	}
+
 	
 }
